@@ -1,0 +1,106 @@
+<div class="row">
+    <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+        <div class="box">
+            <h1>New account</h1>
+            <div class="panel panel-success">
+                <div class="panel-body">
+                    <form #signupForm="ngForm" (ngSubmit)="signup()" class="form-horizontal" novalidate>
+                        <!-- username -->
+                        <div class="form-group">
+                            <label for="username" class="col-md-3 control-label">Username</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" [(ngModel)]="user.username" #username="ngModel"
+                                       name="username" placeholder="Username" required>
+                                <div *ngIf="username.touched && !username.valid" class="alert alert-danger">
+                                    Username is required
+                                </div>
+                            </div>
+                        </div>
+                        <!-- email -->
+                        <div class="form-group">
+                            <label for="email" class="col-md-3 control-label">Email</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" [(ngModel)]="user.email" #email="ngModel"
+                                       name="email" placeholder="Email Address" required>
+                                <div *ngIf="email.touched && !email.valid" class="alert alert-danger">
+                                    Email is required
+                                </div>
+                            </div>
+                        </div>
+                        <!-- firstName -->
+                        <div class="form-group">
+                            <label for="firstName" class="col-md-3 control-label">First Name</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" [(ngModel)]="user.firstName"
+                                       #firstName="ngModel"
+                                       name="firstName" placeholder="First Name" required>
+                                <div *ngIf="firstName.touched && !firstName.valid" class="alert alert-danger">
+                                    First Name is required
+                                </div>
+                            </div>
+                        </div>
+                        <!-- lastName -->
+                        <div class="form-group">
+                            <label for="lastName" class="col-md-3 control-label">Last Name</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" [(ngModel)]="user.lastName" #lastName="ngModel"
+                                       name="lastName" placeholder="Last Name" required>
+                                <div *ngIf="lastName.touched && !lastName.valid" class="alert alert-danger">
+                                    Last Name is required
+                                </div>
+                            </div>
+                        </div>
+                        <!-- phone -->
+                        <div class="form-group">
+                            <label for="phone" class="col-md-3 control-label">Phone</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" [(ngModel)]="user.phone" #phone="ngModel"
+                                       name="phone" placeholder="Phone">
+                                <div *ngIf="phone.touched && !phone.valid" class="alert alert-danger">
+                                    Phone is required
+                                </div>
+                            </div>
+                        </div>
+                        <!-- password -->
+                        <div class="form-group">
+                            <label for="password" class="col-md-3 control-label">Password</label>
+                            <div class="col-md-9">
+                                <input type="password" class="form-control" [(ngModel)]="user.password"
+                                       #password="ngModel"
+                                       name="password" placeholder="Password" required>
+                                <div *ngIf="password.touched && !password.valid" class="alert alert-danger">
+                                    Password is required
+                                </div>
+                            </div>
+                        </div>
+                        <!-- matchingPassword -->
+                        <div class="form-group">
+                            <label for="matchingPassword" class="col-md-3 control-label">Confirm Password</label>
+                            <div class="col-md-9">
+                                <input type="password" class="form-control" [(ngModel)]="user.matchingPassword"
+                                       #matchingPassword="ngModel"
+                                       name="matchingPassword" placeholder="Confirm password" required>
+                            </div>
+                            <div *ngIf="matchingPassword.touched && !matchingPassword.valid"
+                                 class="alert alert-danger">Confirm Password is required
+                            </div>
+                            <div *ngIf="matchingPassword.touched && signupForm.errors && signupForm.errors?.passwordsShouldMatch"
+                                 class="alert alert-danger">
+                                Passwords don't match.
+                            </div>
+                        </div>
+                        <!-- button -->
+                        <div class="form-group">
+                            <div class="col-md-offset-3 col-md-9">
+                                <button type="submit" [disabled]="!signupForm.valid" class="btn btn-info"><i
+                                        class="fa fa fa-user-plus"></i>
+                                    Sign Up
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

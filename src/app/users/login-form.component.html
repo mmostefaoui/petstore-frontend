@@ -1,0 +1,68 @@
+<div class="box">
+    <div id="top2">
+        <div id="login-modal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="Login">Welcome back! Please login</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div *ngIf="error" class="alert alert-danger">{{error}}</div>
+                        <form #loginForm="ngForm" (ngSubmit)="login()" novalidate>
+                            <!-- username -->
+                            <div style="margin-bottom: 25px" class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                <input type="text" name="username" class="form-control" [(ngModel)]="creds.username"
+                                       #username="ngModel" required
+                                       placeholder="username">
+                                <div *ngIf="username.touched && username.errors">
+                                    <div *ngIf="username.errors.invalidLogin"
+                                         class="alert alert-danger">
+                                        Username or password is invalid
+                                    </div>
+                                    <div *ngIf="username.errors.required"
+                                         class="alert alert-danger">Username is required
+                                    </div>
+                                    <div *ngIf="username.errors.cannotContainSpace"
+                                         class="alert alert-danger">
+                                        Username cannot contain space
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- password -->
+                            <div style="margin-bottom: 25px" class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                                <input type="password" class="form-control" name="password"
+                                       [(ngModel)]="creds.password"
+                                       #password="ngModel" required placeholder="password"/>
+                                <div *ngIf="password.touched && password.errors">
+                                    <div *ngIf="password.errors.required"
+                                         class="alert alert-danger">Password is required
+                                    </div>
+                                    <div *ngIf="password.errors.validate"
+                                         class="alert alert-danger">
+                                        Password must contain at least ...
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Button -->
+                            <p class="text-center">
+                                <button type="submit" [disabled]="!loginForm.valid || loading" class="btn btn-primary">
+                                    <i *ngIf="loading" class="fa fa-spinner fa-spin"></i>
+                                    <i class="fa fa-sign-in"></i>Login
+                                </button>
+                            </p>
+
+                            <p class="text-center text-muted">Not registered yet?</p>
+                            <p class="text-center text-muted"><a [routerLink]="['/signup']"><strong>Register
+                                now</strong></a>!
+                                It is easy and done in 1&nbsp;minute and gives you access to special discounts and much
+                                more!
+                            </p>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

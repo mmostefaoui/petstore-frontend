@@ -1,0 +1,87 @@
+<div class="row">
+    <div class="col-md-3">
+        <!-- *** FILTER MENU ***
+_________________________________________________________ -->
+        <div class="panel panel-default sidebar-menu">
+            <div class="panel-heading">
+                <h3 class="panel-title">Filter By</h3>
+            </div>
+            <div class="panel-body">
+                <ul class="nav nav-pills nav-stacked">
+                    <li class="active">
+                        <p>
+                            <strong>Category</strong>
+                            <select class="form-control" (change)="filterByCategory({ categoryId: ddlCategory.value })" #ddlCategory>
+                                <option value="">All pets</option>
+                                <option *ngFor="let category of categories" value="{{ category.id }}">
+                                    {{ category.name }}
+                                </option>
+                            </select>
+                        </p>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+        <!-- /.col-md-3 -->
+
+        <!-- *** FILTER MENU END *** -->
+    </div>
+    <div class="col-md-9">
+        <div class="box">
+            <h1>Pets List</h1>
+            <div class="panel panel-success">
+                <div class="panel-body">
+                    <spinner [visible]="petsLoading"></spinner>
+                    <pagination [items]="filteredPets" (page-changed)="onPageChanged($event)"></pagination>
+                    <p [hasAuthority]="'UNLIMITED_PRIVILEGE, UPDATE_PRIVILEGE, ADD_PRIVILEGE'">
+                        <a [routerLink]="['/pets/new']" class="btn btn-primary btn-sm">
+                            <i class="fa fa-plus"></i>Add Pet</a>
+                    </p>
+                    <div>
+                        <table class="table table-hover">
+                            <tbody>
+                            <tr *ngFor="let pet of pagedPets" [class.active]="currentPet == pet" (click)="select(pet)">
+                                <!-- Media -->
+                               <td>
+                                    <div class="media">
+                                        <div class="media-left">
+                                            <a href="#">
+                                                <img class="media-object thumbnail" src="http://lorempixel.com/80/80/people?random={{ pet.id }}" alt="">
+                                            </a>
+                                        </div>
+                                        <div class="media-body">
+                                            <h3 class="text-primary text-capitalize">
+                                                {{ pet.name }}
+                                            </h3>
+                                            <span>Category: {{pet.category.name}}</span>
+                                            <div class="form-group has-warning">
+                                                <label class="control-label">status:</label> <span class="badge">{{ pet.status}}</span>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </td>
+                                <td style="width: 200px;">
+                                    <div class="input-group pull-right">
+                                        <!-- Edit button -->
+                                        <a [routerLink]="['/pets', pet.id]" class="btn btn-primary btn-sm">
+                                            <i class="glyphicon glyphicon-edit"></i>&nbsp;Edit
+                                        </a>&nbsp;
+                                        <!-- Remove button -->
+                                        <button class="btn btn-danger btn-sm"
+                                                [hasAuthority]="'UNLIMITED_PRIVILEGE, UPDATE_PRIVILEGE, ADD_PRIVILEGE'"
+                                                (click)="deletePet(pet)">
+                                            <i  class="glyphicon glyphicon-remove clickable"></i>&nbsp;Remove
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

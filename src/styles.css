@@ -1,0 +1,12 @@
+.content h1 {
+    text-align: center;
+}
+
+.clickable {
+    cursor: pointer;
+}
+
+.media {
+    margin-bottom: 10px;
+}
+ol,ul{list-style:none;margin:0;padding:0;}

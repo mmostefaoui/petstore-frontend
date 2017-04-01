@@ -1,0 +1,112 @@
+<!-- *** TOPBAR ***
+_________________________________________________________ -->
+<div id="top">
+    <div class="container">
+        <div class="col-md-6 offer" data-animate="fadeInDown">
+            <a href="#" class="btn btn-success btn-sm" data-animate-hover="shake">Offer of the day</a> <a href="#">Get
+            flat 10% off on orders over $500!</a>
+        </div>
+        <div class="col-md-6" data-animate="fadeInDown">
+            <ul class="menu">
+                <li [class.active]="highlight('/login')" *ngIf="!userService.isAuthenticated()"><a
+                        [routerLink]="['/login']" routerLinkActive="active"><i class="fa fa-sign-in"></i>Login</a>
+                </li>
+                <li [class.active]="highlight('/signup')" *ngIf="!userService.isAuthenticated()"><a
+                        [routerLink]="['/signup']" routerLinkActive="active"><i class="fa fa-user-plus"></i>Register</a>
+                </li>
+                <li class="text-neutral" *ngIf="userService.isAuthenticated()"> Welcome back
+                    {{userService.currentUser().firstName}} {{userService.currentUser().lastName}} !
+                </li>
+                <li [class.active]="highlight('/logout')" *ngIf="userService.isAuthenticated()">
+                    <a href="" (click)="logout($event)" routerLinkActive="active"><i class="fa fa-sign-out"></i>Logout</a>
+                </li>
+                <li [class.active]="highlight('/contact')"><a
+                        [routerLink]="['/contact']" routerLinkActive="active">Contact</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- *** TOP BAR END *** -->
+
+<!-- *** NAVBAR ***
+_________________________________________________________ -->
+
+<div class="navbar navbar-default" role="navigation" id="navbar" style="margin-bottom: 20px">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand home" [routerLink]="['/']" data-animate-hover="bounce">
+                <img src="../assets/img/petstore-logo.jpg" alt="Petstore logo" class="hidden-xs">
+            </a>
+            <div class="navbar-buttons">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation">
+                    <span class="sr-only">Toggle navigation</span>
+                    <i class="fa fa-align-justify"></i>
+                </button>
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#search">
+                    <span class="sr-only">Toggle search</span>
+                    <i class="fa fa-search"></i>
+                </button>
+                <a class="btn btn-default navbar-toggle" href="#">
+                    <i class="fa fa-shopping-cart"></i> <span class="hidden-xs">0 items in cart</span>
+                </a>
+            </div>
+        </div>
+        <!--/.navbar-header -->
+
+        <div class="navbar-collapse collapse" id="navigation">
+            <ul class="nav navbar-nav navbar-left">
+                <li [class.active]="highlight('')"><a [routerLink]="['/']" routerLinkActive="active">Home</a></li>
+                <li class="dropdown" [class.active]="highlight('/pets') || highlight('/pets/new')">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="200">Pets
+                        <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li [class.active]="highlight('/pets')">
+                            <a [routerLink]="['/pets']" routerLinkActive="active">List</a>
+                        </li>
+                        <li [class.active]="highlight('/pets/new')">
+                            <a [routerLink]="['/pets/new']" routerLinkActive="active">New</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <!--/.nav-collapse -->
+
+        <div class="navbar-buttons">
+
+            <div class="navbar-collapse collapse right" id="basket-overview">
+                <a href="#" class="btn btn-primary navbar-btn"><i class="fa fa-shopping-cart"></i><span
+                        class="hidden-sm">0 items in cart</span></a>
+            </div>
+            <!--/.nav-collapse -->
+
+            <div class="navbar-collapse collapse right" id="search-not-mobile">
+                <button type="button" class="btn navbar-btn btn-primary" data-toggle="collapse" data-target="#search">
+                    <span class="sr-only">Toggle search</span>
+                    <i class="fa fa-search"></i>
+                </button>
+            </div>
+
+        </div>
+
+        <div class="collapse clearfix" id="search">
+
+            <form class="navbar-form" role="search">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search">
+                    <span class="input-group-btn">
+
+			<button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
+
+		    </span>
+                </div>
+            </form>
+
+        </div>
+        <!--/.nav-collapse -->
+
+    </div>
+    <!-- /.container -->
+</div>
+<!-- /#navbar -->

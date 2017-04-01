@@ -1,0 +1,133 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="box">
+            <h1>{{title}}</h1>
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+                    <div class="panel panel-success">
+                        <div class="panel-body">
+                            <spinner [visible]="editPetLoading || categoriesLoading"></spinner>
+                            <div *ngIf="error" class="alert alert-danger">{{error}}</div>
+                            <form novalidate [formGroup]="petForm" (ngSubmit)="onSubmitForm()" class="form-horizontal">
+                                <!-- Category -->
+                                <section formGroupName="category">
+                                    <label>Category:</label>
+                                    <select class="form-control" #u formControlName="id"
+                                            (change)="onCategoryChanged($event)">
+                                        <option value="0">Select a category...</option>
+                                        <option *ngFor="let category of categories" value="{{ category.id }}">
+                                            {{ category.name }}
+                                        </option>
+                                    </select>
+                                    <input type="hidden" formControlName="name">
+                                </section>
+                                <!-- Name -->
+                                <section>
+                                    <label>Name</label>
+                                    <input type="text" formControlName="name" class="form-control">
+                                    <div class="text-danger"
+                                         *ngIf="petForm.controls.name.errors && petForm.controls.name.touched">
+                                        <div *ngIf="petForm.controls.name.errors.required">Name is required!</div>
+                                        <div *ngIf="petForm.controls.name.errors.minlength">
+                                            Must be at least {{petForm.controls.name.errors.minlength.requiredLength}}
+                                            characters
+                                        </div>
+                                    </div>
+                                </section>
+                                <!-- Photo urls -->
+                                <section>
+                                    <label>Photo urls</label>
+                                    <ul formArrayName="photoUrls">
+                                        <li *ngFor="let item of photoUrlsControls.controls; let i = index">
+                                            <div class="input-group">
+                                                <input type="text" class="form-control input-sm" formControlName="{{i}}"
+                                                       placeholder="Add a photo url" required>
+                                                <span class="input-group-btn">
+                                            <button type="button" class="btn btn-danger btn-sm" title="Remove Request"
+                                                    [hasAuthority]="'UNLIMITED_PRIVILEGE, UPDATE_PRIVILEGE, ADD_PRIVILEGE'"
+                                                    (click)="onRemovePhotoUrl(i)"><i
+                                                    class="fa fa-remove"></i>Remove</button>
+                                        </span>
+                                            </div>
+                                            <div class="text-danger" *ngIf="petForm.controls.photoUrls.controls[i].errors
+                                                                        && petForm.controls.photoUrls.controls[i].touched">
+                                                <div *ngIf="petForm.controls.photoUrls.controls[i].errors.required">
+                                                    Photo url is required!
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                    <button class="btn btn-primary btn-sm"
+                                            [hasAuthority]="'UNLIMITED_PRIVILEGE, UPDATE_PRIVILEGE, ADD_PRIVILEGE'"
+                                            (click)="onAddPhotoUrl($event)">
+                                        <i class="fa fa-plus"></i>Add a photo url
+                                    </button>
+                                </section>
+                                <!-- Tags -->
+                                <section>
+                                    <label>Tags</label>
+                                    <ul formArrayName="tags">
+                                        <li *ngFor="let item of tagsControls.controls; let i = index">
+                                            <div class="input-group" formGroupName="{{i}}">
+                                                <input type="text" class="form-control input-sm" formControlName="name"
+                                                       placeholder="Add a tag...">
+                                                <span class="input-group-btn">
+                                                <button type="button" class="btn btn-danger btn-sm" title="Remove tag"
+                                                        [hasAuthority]="'UNLIMITED_PRIVILEGE, UPDATE_PRIVILEGE, ADD_PRIVILEGE'"
+                                                        (click)="onRemoveTag(i)"><i
+                                                        class="fa fa-remove"></i>Remove</button>
+                                        </span>
+                                            </div>
+                                            <div class="text-danger" *ngIf="petForm.controls.tags.controls[i].controls.name.errors
+                                                                && petForm.controls.tags.controls[i].controls.name.touched">
+                                                <div *ngIf="petForm.controls.tags.controls[i].controls.name.errors.required">
+                                                    Tag name is required!
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                    <button type="button" class="btn btn-primary btn-sm"
+                                            [hasAuthority]="'UNLIMITED_PRIVILEGE, UPDATE_PRIVILEGE, ADD_PRIVILEGE'"
+                                            (click)="onAddTag($event)"><i
+                                            class="fa fa-plus"></i>Add a tag
+                                    </button>
+                                </section>
+                                <!-- Status -->
+                                <section>
+                                    <label>Status:</label>
+                                    <select formControlName="status" class="form-control">
+                                        <option value="">Select a status...</option>
+                                        <option value="available">Available</option>
+                                        <option value="pending">Pending</option>
+                                        <option value="sold">Sold</option>
+                                    </select>
+                                </section>
+                                <!-- Buttons -->
+                                <div [hasAuthority]="'UNLIMITED_PRIVILEGE, UPDATE_PRIVILEGE, ADD_PRIVILEGE'">
+                                    <button type="button" class="btn btn-default" (click)="onClearForm()">
+                                        <i class="fa fa-undo"></i>Reset
+                                    </button>
+                                    <button type="submit" class="btn btn-primary"
+                                            [disabled]="!petForm.valid || savingLoading">
+                                        <i *ngIf="savingLoading" class="fa fa-spinner fa-spin"></i>
+                                        <i class="fa fa-save"></i>Save
+                                    </button>
+                                </div>
+                            </form>
+                            <section class="section-back">
+                                <button class="btn btn-default" (click)="onGoToPetsList()"><i
+                                        class="fa fa-chevron-circle-left"></i>&nbsp;Back to pets list
+                                </button>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Debug the form -->
+<!--<debug-panel [data]="petForm.value"></debug-panel>-->
+
+
